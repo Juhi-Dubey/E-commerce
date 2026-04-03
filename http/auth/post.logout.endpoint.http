@@ -1,0 +1,7 @@
+POST http://localhost:3001/api/auth/logout
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZkMzBhMTYxOTUyOGQ4NDU2OWMyMyIsImlhdCI6MTc3NTIyOTk5OCwiZXhwIjoxNzc1MjMwODk4fQ.8Bc8WwSLxNVfVtPUAnyzlWwxSVU1FiSQz4Qigw0YvQI
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZkMzBhMTYxOTUyOGQ4NDU2OWMyMyIsImlhdCI6MTc3NTIyOTk5OCwiZXhwIjoxNzc1ODM0Nzk4fQ.QuX4e0Mj7kTAtTA-HPObdqREVaRX56qH80R_38Yk-yg"
+}

@@ -1,0 +1,4 @@
+PATCH http://localhost:3001/api/user/update
+Content-Type: application/json
+Authorization: Bearer
+

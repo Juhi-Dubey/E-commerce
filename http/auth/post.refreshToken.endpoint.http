@@ -1,0 +1,6 @@
+POST http://localhost:3001/api/auth/refresh-token
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZkMzBhMTYxOTUyOGQ4NDU2OWMyMyIsImlhdCI6MTc3NTIyOTUzNCwiZXhwIjoxNzc1ODM0MzM0fQ.4JaR1qSnslVwDk7Kpm3sVLM7gFKwlsnBM_aa2RUeTQY"
+}
