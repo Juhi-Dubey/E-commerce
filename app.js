@@ -18,7 +18,8 @@ const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const { StatusCodes } = require('http-status-codes');
-const {authRouter} = require('./routes/auth.routes');
+const { authRouter } = require('./routes/auth.routes');
+const { userRouter } = require('./routes/user.routes');
 
 
 const app = express();
@@ -47,7 +48,7 @@ app.use(morgan('combined', {stream: accessLogStream}));
 
 
 app.use('/api/auth', authRouter);
-// app.use('/api/user', userRouter);
+app.use('/api/user', userRouter);
 
 app.use((req, res) =>{
     res.status(StatusCodes.NOT_FOUND).json({message: "Not found"});
