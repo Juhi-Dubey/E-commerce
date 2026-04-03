@@ -20,8 +20,8 @@ const loginUserService = async (data) =>{
         throw error;
     }
 
-    const accessToken = generateAccessToken(user._id);
-    const refreshToken = generateRefreshToken(user._id);
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
 
     const hashedToken = await hashPassword(refreshToken);
     user.refreshToken = hashedToken;

@@ -1,18 +1,26 @@
 const { Schema, model } = require('mongoose');
 
+
+const {
+    NAME_MAX_LENGTH,
+    PASSWORD_MIN_LENGTH
+} = require('../constants/user.constant');
+
+
+
 const userSchema = new Schema(
     {
         firstName: {
             type: String,
             required: [true, "First name is required"],
             trim: true,
-            maxLength: [100, "First name cannot exceed 100 characters"],
+            maxLength: [NAME_MAX_LENGTH, `First name cannot exceed ${ NAME_MAX_LENGTH} characters`],
         },
 
         lastName: {
             type: String,
             trim: true,
-            maxLength: [100, "Last name cannot exceed 100 characters"],
+            maxLength: [NAME_MAX_LENGTH, `Last name cannot exceed ${ NAME_MAX_LENGTH} characters`],
         },
 
         email: {
@@ -33,7 +41,7 @@ const userSchema = new Schema(
         password: {
             type: String,
             required: [true, "Password is required"],
-            minLength: [8, "Password must be at least 8 characters long"],
+            minLength: [PASSWORD_MIN_LENGTH, `Password must be at least ${PASSWORD_MIN_LENGTH} characters long`],
             select: false,
         },
 
@@ -41,6 +49,12 @@ const userSchema = new Schema(
             type: String,
             default: null,
         },
+
+        role: {
+            type: String,
+            enum: ["user", "admin"],
+            default: "user"
+        }
     },
     {
         timestamps: true,

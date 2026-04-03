@@ -38,10 +38,10 @@ const refreshTokenService = async (token) =>{
     }
 
     
-    const newAccessToken = generateAccessToken(user._id);
-    const newRefreshToken = generateRefreshToken(user._id);
+    const newAccessToken = generateAccessToken(user);
+    const newRefreshToken = generateRefreshToken(user);
 
-    const hashedToken = await hashPassword(newRefreshToken, 10);
+    const hashedToken = await hashPassword(newRefreshToken);
     user.refreshToken = hashedToken;
     await user.save();
 

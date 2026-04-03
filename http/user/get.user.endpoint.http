@@ -1,2 +1,4 @@
 GET http://localhost:3001/api/user/profile
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZDAwNTkxY2U0MDRkNmU4ZGNhOTNjMSIsImlhdCI6MTc3NTI0MDU5MywiZXhwIjoxNzc1MjQxNDkzfQ.W54HxLZKCE-mukgLQN3opCWx5AF7hmUBlcftguWsZMw
+
+

@@ -23,11 +23,11 @@ const registerUserService = async (data) =>{
         password: hashedPassword 
     });
 
-    const accessToken = generateAccessToken(user._id);
-    const refreshToken = generateRefreshToken(user._id);
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
 
     const hashedToken = await hashPassword(refreshToken);
-    user.refreshToken = hashedPassword;
+    user.refreshToken = hashedToken;
     await user.save();
 
     return{
