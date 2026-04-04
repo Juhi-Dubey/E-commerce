@@ -18,8 +18,11 @@ const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const { StatusCodes } = require('http-status-codes');
+const { responseFormatter } = require('./middlewares/responseFormatter.middleware');
+const { errorLogger } = require('./utils/errorLogger.util');
 const { authRouter } = require('./routes/auth.routes');
 const { userRouter } = require('./routes/user.routes');
+const { productRouter } = require('./routes/product.routes');
 
 
 const app = express();
@@ -30,7 +33,7 @@ app.use(express.json());
 
 
 const corsOptions = {
-    origin: ["http://localhost:3001", "http://localhost:3000"],
+    origin: ["http://localhost:3000"],
 }
 
 app.use(cors(corsOptions));
@@ -44,14 +47,28 @@ let accessLogStream = fs.createWriteStream(
 );
 
 app.use(morgan('combined', {stream: accessLogStream}));
-
+app.use(responseFormatter);
 
 
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
+app.use('/api/products', productRouter);
+
 
 app.use((req, res) =>{
     res.status(StatusCodes.NOT_FOUND).json({message: "Not found"});
+});
+
+
+
+app.use((err, req, res, next) => {
+    errorLogger("API Error", req, err); 
+    const statusCode = err.statusCode || 500;
+
+    res.status(statusCode).json({
+        message: err.message,
+        details: err.details || null,
+    });
 });
 
 

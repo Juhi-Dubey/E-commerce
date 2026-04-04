@@ -1,0 +1,34 @@
+const PRODUCT_NAME_MIN_LENGTH = 3;
+const PRODUCT_NAME_MAX_LENGTH = 150;
+
+const PRODUCT_DESC_MIN_LENGTH = 10;
+const PRODUCT_DESC_MAX_LENGTH = 1000;
+
+const PRODUCT_PRICE_MIN = 0;
+const PRODUCT_PRICE_MAX = 1000000;
+
+const PRODUCT_STOCK_MIN = 0;
+const PRODUCT_STOCK_MAX = 10000;
+
+
+const PRODUCT_CATEGORIES = [
+    "electronics",
+    "clothing",
+    "books",
+    "home",
+    "beauty",
+    "sports",
+    "toys",
+    "other"
+]
+module.exports = {
+    PRODUCT_NAME_MIN_LENGTH,
+    PRODUCT_NAME_MAX_LENGTH,
+    PRODUCT_DESC_MIN_LENGTH,
+    PRODUCT_DESC_MAX_LENGTH,
+    PRODUCT_PRICE_MIN,
+    PRODUCT_PRICE_MAX,
+    PRODUCT_STOCK_MIN,
+    PRODUCT_STOCK_MAX,
+    PRODUCT_CATEGORIES
+};

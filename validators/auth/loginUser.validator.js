@@ -3,8 +3,8 @@ const { body } = require('express-validator')
 
 const {
     MAX_EMAIL_LENGTH,
-    PASSWORD_MIN,
-    PASSWORD_MAX,
+    PASSWORD_MIN_LENGTH,
+    PASSWORD_MAX_LENGTH
 } = require('../../constants/user.constant');
 
 
@@ -19,7 +19,7 @@ const loginUserValidator = [
     body("password")
         .notEmpty().withMessage('Password is required')
         .isString().withMessage("Password must be a string")
-        .isLength({ min: PASSWORD_MIN, max: PASSWORD_MAX }).withMessage("Password must be between 8 and 128 characters"),
+        .isLength({ min: PASSWORD_MIN_LENGTH, max: PASSWORD_MAX_LENGTH }).withMessage("Password must be between 8 and 128 characters"),
              
 ];
 

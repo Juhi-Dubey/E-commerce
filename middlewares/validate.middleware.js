@@ -5,11 +5,10 @@ function validate(req, res, next) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return res.status(StatusCodes.BAD_REQUEST).json({
-            success: false,
-            message: "Validation failed",
-            errors: errors.array(),
-        });
+        const error = new Error("Validation failed");
+        error.statusCode = StatusCodes.BAD_REQUEST;
+        error.details = errors.array(); 
+        return next(error);
     }
 
     next();
