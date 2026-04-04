@@ -48,10 +48,7 @@ const updateProductController = async (req, res, next) =>{
             req.user.role,
             req.body
         );
-        res.status(StatusCodes.OK).json({
-            success: true,
-            data: result
-        });
+        res.status(StatusCodes.OK).json(result)
 
     } catch (error) {
         next(error);
@@ -66,11 +63,8 @@ const deleteProductController = async (req, res, next) => {
             req.user.id,
             req.user.role
         );
-        res.status(StatusCodes.OK).json({
-            success: true,
-            data: result
-        });
-        
+        res.status(StatusCodes.OK).json(result)
+
     } catch (error) {
         next(error);
     }

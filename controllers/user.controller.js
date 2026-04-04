@@ -7,10 +7,7 @@ const getProfileController = async (req, res, next) =>{
     try {
         const result = await getProfileService(req.user.id);
 
-        res.status(200).json({ 
-            success: true, 
-            data: result 
-        });
+        res.status(StatusCodes.OK).json(result)
 
     } catch (error) {
         next(error);
@@ -25,10 +22,7 @@ const updateUserController = async (req, res, next) =>{
             req.body
         );
 
-        res.status(200).json({ 
-            success: true, 
-            data: result           
-        });
+        res.status(StatusCodes.OK).json(result)
 
     } catch (error) {
         next(error);
@@ -40,13 +34,10 @@ const deleteUserController = async (req, res, next) => {
     try { 
         await deleteUserService(req.user.id); 
         
-        res.status(200).json({ 
-            success: true, 
-            data: {
-                message: "User deleted successfully"
-            }
-
+        res.status(200).json({
+            message: "User deleted successfully"
         }); 
+        
     } catch (error) { 
         next(error); 
     } 

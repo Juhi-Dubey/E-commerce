@@ -17,12 +17,15 @@ const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const rateLimit = require("express-rate-limit");
+const { logger } = require('./utils/winston.util');
 const { StatusCodes } = require('http-status-codes');
 const { responseFormatter } = require('./middlewares/responseFormatter.middleware');
 const { errorLogger } = require('./utils/errorLogger.util');
 const { authRouter } = require('./routes/auth.routes');
 const { userRouter } = require('./routes/user.routes');
 const { productRouter } = require('./routes/product.routes');
+const { cartRouter } = require("./routes/cart.routes");
 
 
 const app = express();
@@ -31,6 +34,15 @@ const port = process.env.PORT || 3001;
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+    req.id = Math.random().toString(36).substring(7);
+    next();
+});
+
+app.use((req, res, next) => {
+    logger.info(`[${req.id}] ${req.method} ${req.url}`);
+    next();
+});
 
 const corsOptions = {
     origin: ["http://localhost:3000"],
@@ -49,10 +61,19 @@ let accessLogStream = fs.createWriteStream(
 app.use(morgan('combined', {stream: accessLogStream}));
 app.use(responseFormatter);
 
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 mins
+    max: 100, // max 100 requests
+    message: "Too many requests, calm down"
+});
+
+app.use(limiter);
+
 
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/products', productRouter);
+app.use('/api/cart', cartRouter);
 
 
 app.use((req, res) =>{

@@ -1,0 +1,7 @@
+const CART_ITEM_QUANTITY_MIN = 1;
+const CART_ITEM_QUANTITY_MAX = 100;
+
+module.exports = {
+    CART_ITEM_QUANTITY_MIN,
+    CART_ITEM_QUANTITY_MAX
+};

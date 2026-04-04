@@ -3,6 +3,10 @@ const { StatusCodes }  = require('http-status-codes');
 
 
 const updateProductService = async (productId, userId, role, data) =>{
+    if (data.category) {
+        data.category = data.category.toLowerCase().trim();
+    }
+
     const product = await Product.findById(productId);
 
     if(!product){
