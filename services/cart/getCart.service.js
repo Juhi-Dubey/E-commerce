@@ -8,7 +8,16 @@ const getCartService = async(userId) =>{
     if(!cart){
         return { items: []};
     }
-    return cart;
+
+    let total = 0;
+
+    const items = cart.items.map(item =>{
+        const price = item.priceAtAdd || item.product.price;
+        const itemTotal = price * item.quantity;
+        total += itemTotal;
+        return { ...item, total: itemTotal };
+    })
+    return { ...cart, items, total };
 };
 
 module.exports = { getCartService };

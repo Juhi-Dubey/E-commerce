@@ -2,7 +2,6 @@ const { getProfileService } = require('../services/user/getUser.service');
 const { updateUserService } = require('../services/user/updateUser.service');
 const { deleteUserService } = require('../services/user/deleteUser.service');
 const { StatusCodes } = require('http-status-codes');
-const { Cart } = require('../../models/cart.schema');
 
 
 const getProfileController = async (req, res, next) =>{
@@ -35,7 +34,7 @@ const updateUserController = async (req, res, next) =>{
 const deleteUserController = async (req, res, next) => { 
     try { 
         await deleteUserService(req.user.id); 
-        await User.findByIdAndDelete(userId);
+        
         
         res.status(200).json({
             message: "User deleted successfully"

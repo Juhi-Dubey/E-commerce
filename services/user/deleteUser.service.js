@@ -1,5 +1,7 @@
 const { User } = require('../../models/user.schema');
+const { Cart } = require('../../models/cart.schema');
 const { StatusCodes } = require('http-status-codes');
+
 
 const deleteUserService = async (userId) =>{
     const user = await User.findByIdAndDelete(userId);
