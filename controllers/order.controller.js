@@ -2,7 +2,7 @@ const { createOrderService } = require("../services/order/createOrder.service");
 const { getOrdersService } = require("../services/order/getOrders.service");
 const { getOrderByIdService } = require("../services/order/getOrderById.service");
 const { cancelOrderService } = require('../services/order/cancelOrder.service');
-
+const { updateOrderStatusService } = require('../services/order/updateOrderStatus.service');
 const { StatusCodes } = require('http-status-codes');
 
 
@@ -59,9 +59,25 @@ const cancelOrderController = async (req, res, next) =>{
     }
 }
 
+
+const updateOrderStatusController = async (req, res, next) =>{
+    try {
+        const result = await updateOrderStatusService(
+            req.params.id,
+            req.body.status,
+            req.user.role
+        );
+
+        res.status(StatusCodes.OK).json(result);
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     createOrderController,
     getOrdersController,
     getOrderByIdController,
     cancelOrderController,
+    updateOrderStatusController,
 };
