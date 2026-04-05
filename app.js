@@ -28,6 +28,7 @@ const { authRouter } = require('./routes/auth.routes');
 const { userRouter } = require('./routes/user.routes');
 const { productRouter } = require('./routes/product.routes');
 const { cartRouter } = require("./routes/cart.routes");
+const { orderRouter } = require("./routes/order.routes");
 
 
 const app = express();
@@ -79,7 +80,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/products', productRouter);
 app.use('/api/cart', cartRouter);
-
+app.use('/api/orders', orderRouter);
 
 
 

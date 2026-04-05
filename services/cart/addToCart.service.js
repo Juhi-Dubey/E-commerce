@@ -50,10 +50,16 @@ const addToCartService = async (userId, data) => {
 
         if (existingItem) {
             existingItem.quantity += quantity;
+
+            if(!existingItem.priceAtAdd){
+                existingItem.priceAtAdd = product.price;
+            }
+            
         } else {
             cart.items.push({
                 product: productId,
-                quantity
+                quantity,
+                priceAtAdd: product.price
             });
         }
 
