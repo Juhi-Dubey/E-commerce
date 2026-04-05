@@ -18,6 +18,8 @@ const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const rateLimit = require("express-rate-limit");
+const helmet = require('helmet');
+const { v4: uuidv4 } = require('uuid');
 const { logger } = require('./utils/winston.util');
 const { StatusCodes } = require('http-status-codes');
 const { responseFormatter } = require('./middlewares/responseFormatter.middleware');
@@ -32,10 +34,11 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 
-app.use(express.json());
+app.use(express.json({ limit: "10kb"}));
+app.use(helmet());
 
 app.use((req, res, next) => {
-    req.id = Math.random().toString(36).substring(7);
+    req.id = uuidv4();
     next();
 });
 
@@ -67,13 +70,17 @@ const limiter = rateLimit({
     message: "Too many requests, calm down"
 });
 
-app.use(limiter);
+app.use('/api/auth/login', limiter);
+app.use('/api/auth/register', limiter);
+app.use('/api/auth/refresh-token', limiter);
 
 
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/products', productRouter);
 app.use('/api/cart', cartRouter);
+
+
 
 
 app.use((req, res) =>{

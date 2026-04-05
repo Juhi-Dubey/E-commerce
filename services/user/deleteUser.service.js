@@ -9,6 +9,10 @@ const deleteUserService = async (userId) =>{
         error.statusCode = StatusCodes.NOT_FOUND;
         throw error;
     }
+
+    await Cart.deleteOne({ user: userId });
+    await User.findByIdAndDelete(userId);
+
     return {
         message: "User deleted successfully"
     };

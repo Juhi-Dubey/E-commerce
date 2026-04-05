@@ -25,6 +25,8 @@ const updatePasswordService = async (userId, data) =>{
     const hashedPassword = await hashPassword(newPassword);
 
     user.password = hashedPassword;
+    user.refreshToken = null;
+    
     await user.save();
 
     return{

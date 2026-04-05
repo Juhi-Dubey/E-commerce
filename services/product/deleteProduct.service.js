@@ -1,9 +1,13 @@
 const { Product } = require('../../models/product.schema');
-const { StatusCodes, FORBIDDEN }  = require('http-status-codes');
+const { StatusCodes }  = require('http-status-codes');
+const { clearCache } = require('../../utils/cache.util');
 
 
 const deleteProductService = async (productId, userId, role) =>{
-    const product = await Product.findById(productId);
+    const product = await Product.findOne({
+        _id: productId,
+        isDeleted: false
+    });
 
     if(!product){
         const error = new Error("Product not found");
@@ -17,7 +21,10 @@ const deleteProductService = async (productId, userId, role) =>{
         throw error;
     }
 
-    await product.deleteOne();
+    product.isDeleted = true;
+    await product.save();
+    
+    clearCache();
 
     return {
         message: "Product deleted successfully"

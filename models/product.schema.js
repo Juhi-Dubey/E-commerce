@@ -57,6 +57,10 @@ const productSchema = new Schema(
             trim: true,
             enum: PRODUCT_CATEGORIES,
         },
+        isDeleted: {
+            type: Boolean,
+            default: false
+        }
     },
     {
         timestamps: true,

@@ -5,38 +5,48 @@ const mongoose = require("mongoose");
 
 
 const addToCartService = async (userId, data) => {
-    const session = await mongoose.startSession();
-    session.startTransaction();
 
     try {
         const { productId, quantity } = data;
 
-        const product = await Product.findById(productId).session(session);
+        const product = await Product.findOne({
+            _id: productId,
+            isDeleted: false
+        });
 
         if (!product) throw new Error("Product not found");
+
+        if (quantity <= 0) {
+            throw new Error("Invalid quantity");
+        }
 
         if (quantity > product.stock) {
             throw new Error("Not enough stock");
         }
 
-        
-        await product.save({ session });
 
-        let cart = await Cart.findOne({ user: userId }).session(session);
+        let cart = await Cart.findOne({ user: userId });
 
         if (!cart) {
             cart = await Cart.create([{
                 user: userId,
-                items: [{ product: productId, quantity }]
-            }], { session });
+                items: [{ product: productId, quantity, priceAtAdd: product.price }]
+            }]);
 
-            await session.commitTransaction();
             return cart[0];
         }
 
         const existingItem = cart.items.find(
             item => item.product.toString() === productId
         );
+
+        const totalRequested = existingItem
+            ? existingItem.quantity + quantity
+            : quantity;
+
+        if (totalRequested > product.stock) {
+            throw new Error("Not enough stock available");
+        }
 
         if (existingItem) {
             existingItem.quantity += quantity;
@@ -47,16 +57,12 @@ const addToCartService = async (userId, data) => {
             });
         }
 
-
-        await session.commitTransaction();
+        await cart.save();
         return cart;
 
     } catch (err) {
-        await session.abortTransaction();
         throw err;
-    } finally {
-        session.endSession();
-    }
+    } 
 };
 
 

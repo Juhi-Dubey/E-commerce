@@ -1,4 +1,5 @@
 const { Product } = require('../../models/product.schema');
+const { clearCache } = require('../../utils/cache.util');
 
 
 const createProductService = async (userId, data) =>{
@@ -11,7 +12,8 @@ const createProductService = async (userId, data) =>{
         ...data,
         createdBy: userId,
     });
-
+    clearCache();
+    
     return product;
 }
 

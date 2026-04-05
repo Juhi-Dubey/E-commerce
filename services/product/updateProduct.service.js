@@ -1,13 +1,18 @@
 const { Product } = require('../../models/product.schema');
 const { StatusCodes }  = require('http-status-codes');
 
+const { clearCache } = require('../../utils/cache.util');
+
 
 const updateProductService = async (productId, userId, role, data) =>{
     if (data.category) {
         data.category = data.category.toLowerCase().trim();
     }
 
-    const product = await Product.findById(productId);
+    const product = await Product.findOne({
+        _id: productId,
+        isDeleted: false
+    });
 
     if(!product){
         const error = new Error("Product not found");
@@ -31,6 +36,7 @@ const updateProductService = async (productId, userId, role, data) =>{
 
     await product.save();
 
+    clearCache();
     return product;
 }
 

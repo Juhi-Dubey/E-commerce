@@ -31,7 +31,10 @@ const updateCartService = async (userId, productId, data) =>{
         throw error;
     }
 
-    const product = await Product.findById(productId);
+    const product = await Product.findOne({
+        _id: productId,
+        isDeleted: false
+    });
 
     if(!product){
         const error = new Error("Product not found");

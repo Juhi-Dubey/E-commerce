@@ -24,7 +24,8 @@ const cartSchema = new Schema(
                     required: true,
                     min: CART_ITEM_QUANTITY_MIN,
                     max: CART_ITEM_QUANTITY_MAX
-                }
+                },
+                priceAtAdd: Number,
             }
         ]
     },
