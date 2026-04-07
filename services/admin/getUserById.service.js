@@ -1,0 +1,16 @@
+const { User } = require('../../models/user.schema');
+const { StatusCodes } = require("http-status-codes");
+
+
+const getUserByIdService = async (userId) => {
+    const user = await User.findById(userId);
+
+    if(!user){
+        const error = new Error("User not found");
+        error.statusCode = StatusCodes.NOT_FOUND;
+        throw error;
+    }
+    return user;
+}
+
+module.exports = { getUserByIdService };
