@@ -3,14 +3,20 @@ const { getOrdersService } = require("../services/order/getOrders.service");
 const { getOrderByIdService } = require("../services/order/getOrderById.service");
 const { cancelOrderService } = require('../services/order/cancelOrder.service');
 const { updateOrderStatusService } = require('../services/order/updateOrderStatus.service');
+const { createPaymentService } = require("../services/payment/createPayment.service");
 const { StatusCodes } = require('http-status-codes');
 
 
 const createOrderController = async (req, res, next) => {
     try {
         const result = await createOrderService(req.user.id);
+        const payment = await createPaymentService(result.order);
 
-        res.status(StatusCodes.CREATED).json(result);
+        res.status(StatusCodes.CREATED).json({ 
+            ...result, 
+            payment 
+        });
+        
     } catch (error) {
         next(error);
     }

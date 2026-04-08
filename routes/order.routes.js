@@ -19,7 +19,7 @@ const { cancelOrderValidator } = require("../validators/order/cancelOrder.valida
 const { updateOrderStatusValidator } = require("../validators/order/updateOrderStatus.validator");
 
 
-orderRouter.post('/', authenticate, createOrderValidator, validate, createOrderController);
+orderRouter.post('/', authenticate, validate, createOrderController);
 
 orderRouter.get('/', authenticate, getOrdersValidator, validate, getOrdersController);
 

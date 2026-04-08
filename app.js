@@ -30,6 +30,7 @@ const { productRouter } = require('./routes/product.routes');
 const { cartRouter } = require("./routes/cart.routes");
 const { orderRouter } = require("./routes/order.routes");
 const { adminRouter } = require("./routes/admin.routes");
+const { paymentRouter } = require("./routes/payment.routes");
 
 
 const app = express();
@@ -83,6 +84,7 @@ app.use('/api/products', productRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/orders', orderRouter);
 app.use('/api/admin', adminRouter);
+app.use('/api/payment', paymentRouter);
 
 
 app.use((req, res) =>{
